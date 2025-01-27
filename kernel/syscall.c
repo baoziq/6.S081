@@ -139,12 +139,16 @@ syscall(void)
   struct proc *p = myproc();
   
   num = p->trapframe->a7;
+  
+
   if(num > 0 && num < NELEM(syscalls) && syscalls[num]) {
     int mask = p -> mask;
     p->trapframe->a0 = syscalls[num]();
-    //printf("mask: %d\n", mask);
-    if (mask & (1 << num)) {
+    
+    if (1 & (mask >> num)) {
       //printf("test:%d\n", 1 >> num);
+      //printf("debug\n");
+      //printf("syscall: mask=%d, num=%d\n", mask, num);
       printf("%d: syscall %s -> %d\n", p -> pid, name[num - 1], p -> trapframe -> a0);
     }
   } else {

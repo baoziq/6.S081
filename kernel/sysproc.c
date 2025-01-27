@@ -103,5 +103,6 @@ uint64 sys_trace(void) {
   struct proc *p = myproc();
   p->mask = n;
   printf("%d: syscall trace -> 0\n", p -> pid);
+  //printf("sys_trace: mask set to %d for pid %d\n", n, p->pid);
   return 0;
 }
