@@ -3,7 +3,6 @@
 #include "kernel/types.h"
 #include "kernel/riscv.h"
 #include "user/user.h"
-
 void ugetpid_test();
 void pgaccess_test();
 
