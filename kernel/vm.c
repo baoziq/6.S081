@@ -459,3 +459,27 @@ void vmprint(pagetable_t pagetable) {
   vm_print(pagetable, 0);
   return;
 }
+
+int pgaccess(pagetable_t pagetable, uint64 base, int len, uint64 mask) {
+  if (len > 32) {
+    panic("too long\n");
+    return -1;
+  }
+  unsigned int bitmask = 0;
+  int cur_bitmask = 1;
+  int count = 0;
+  uint64 va = base;
+  pte_t *pte;
+  for (; count < len; count++, va += PGSIZE)
+  {
+    if ((pte = walk(pagetable, va, 0)) == 0)
+      panic("pgaccess: pte should exist");
+    if ((*pte & PTE_A))
+    {
+      bitmask |= (cur_bitmask<<count);
+      *pte &= ~PTE_A;
+    }
+  }
+  copyout(pagetable,mask, (char*)&bitmask,sizeof(bitmask));
+  return 0;
+}
