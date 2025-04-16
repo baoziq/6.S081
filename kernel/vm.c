@@ -314,6 +314,10 @@ uvmcopy(pagetable_t old, pagetable_t new, uint64 sz)
     *pte &= ~PTE_W;
     *pte |= PTE_C;
     flags = PTE_FLAGS(*pte);
+    // if ((mem = kalloc) == 0) {
+    //   goto err;
+    // }
+    // memmove(mem, (char *)pa, PGSIZE);
     if (mappages(new, i, PGSIZE, pa, flags) != 0) {
       goto err;
     }
