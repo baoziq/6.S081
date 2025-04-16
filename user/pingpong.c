@@ -1,4 +1,3 @@
-// copy version
 #include "kernel/types.h"
 #include "user/user.h"
 
@@ -10,11 +9,6 @@ int main(int argc, char *argv[]) {
   pipe(pipes2);
 
   int ret = fork();
-
-  // parent send in pipes1[1], child receives in pipes1[0]
-  // child send in pipes2[1], parent receives in pipes2[0]
-  // should have checked close & read & write return value for error, but i am
-  // lazy
   if (ret == 0) {
     // i am the child
     pid = getpid();
